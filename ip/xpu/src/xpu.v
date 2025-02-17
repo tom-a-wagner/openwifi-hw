@@ -108,6 +108,7 @@ module xpu #
   output wire [3:0] cw,
   input wire high_trigger,
   input wire [1:0] tx_queue_idx,
+  output wire [47:0] ftm_time, // clock-driven up-counter to provide the current time for FTM timestamps
 
   // to side channel
   output wire [31:0] FC_DI,
@@ -860,6 +861,13 @@ xpu_s_axi # (
   //.SLV_REG61(slv_reg61),
   .SLV_REG62(slv_reg62),
   .SLV_REG63(slv_reg63)
+);
+
+ftm_time #(
+) ftm_time_i (
+    .clk(s00_axi_aclk),
+    .rstn(s00_axi_aresetn),
+    .ftm_time(ftm_time)
 );
 
 endmodule

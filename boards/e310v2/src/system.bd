@@ -4901,6 +4901,12 @@
               "tx_intf_0/dina_from_xpu"
             ]
           },
+          "xpu_0_ftm_time": {
+            "ports": [
+              "xpu_0/ftm_time",
+              "tx_intf_0/ftm_time"
+            ]
+          },
           "xpu_0_gpio_status_lock_by_sig_valid": {
             "ports": [
               "xpu_0/gpio_status_lock_by_sig_valid",

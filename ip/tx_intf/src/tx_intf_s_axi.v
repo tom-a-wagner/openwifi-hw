@@ -49,12 +49,12 @@
         input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG23,
         input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG24,
         input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG25,
-        input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG26,/*
+        input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG26,
         input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG27,
         input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG28,
         input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG29,
         input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG30,
-        input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG31,*/
+        //input  wire [C_S_AXI_DATA_WIDTH-1:0] SLV_REG31,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -169,11 +169,11 @@
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg23;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg24;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg25;
-	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg26;/*
+	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg26;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg27;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg28;
 	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg29;
-	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg30;*/
+	reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg30;
 	//reg [C_S_AXI_DATA_WIDTH-1:0]	slv_reg31;
 	// wire	 slv_reg_rden;
 	wire	 slv_reg_wren;
@@ -516,7 +516,7 @@
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 26
 	                //slv_reg26[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-	              end  /*
+	              end
 	          5'h1B:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
@@ -544,7 +544,7 @@
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 30
 	                //slv_reg30[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-	              end 
+	              end  /*
 	          5'h1F:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
@@ -720,12 +720,12 @@
 	        5'h17   : reg_data_out <= slv_reg23;
 	        5'h18   : reg_data_out <= slv_reg24;
 	        5'h19   : reg_data_out <= slv_reg25;
-	        5'h1A   : reg_data_out <= slv_reg26;/*
+	        5'h1A   : reg_data_out <= slv_reg26;
 	        5'h1B   : reg_data_out <= slv_reg27;
 	        5'h1C   : reg_data_out <= slv_reg28;
 	        5'h1D   : reg_data_out <= slv_reg29;
 	        5'h1E   : reg_data_out <= slv_reg30;
-	        5'h1F   : reg_data_out <= slv_reg31;*/
+	        //5'h1F   : reg_data_out <= slv_reg31;
 	        default : reg_data_out <= 0;
 	      endcase
 	end
@@ -760,12 +760,12 @@
           slv_reg23 <= 32'h0;
           slv_reg24 <= 32'h0;
           slv_reg25 <= 32'h0;
-          slv_reg26 <= 32'h0;/*
+          slv_reg26 <= 32'h0;
           slv_reg27 <= 32'h0;
           slv_reg28 <= 32'h0;
           slv_reg29 <= 32'h0;
           slv_reg30 <= 32'h0;
-          slv_reg31 <= 32'h0;*/
+          //slv_reg31 <= 32'h0;
         end 
       else
         begin    
@@ -775,12 +775,12 @@
           slv_reg23 <= SLV_REG23;
           slv_reg24 <= SLV_REG24;
           slv_reg25 <= SLV_REG25;
-          slv_reg26 <= SLV_REG26;/*
+          slv_reg26 <= SLV_REG26;
           slv_reg27 <= SLV_REG27;
           slv_reg28 <= SLV_REG28;
           slv_reg29 <= SLV_REG29;
           slv_reg30 <= SLV_REG30;
-          slv_reg31 <= SLV_REG31;*/
+          //slv_reg31 <= SLV_REG31;
         end 
     end       
     

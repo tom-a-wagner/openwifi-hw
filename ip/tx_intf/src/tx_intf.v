@@ -114,6 +114,7 @@ module tx_intf #
   output wire reset_backoff,
   output wire high_trigger,
   output wire [1:0] tx_queue_idx_to_xpu,
+  input wire [47:0] ftm_time,
 
   // Ports of Axi Slave Bus Interface S00_AXI
   input wire  s00_axi_aclk,
@@ -189,10 +190,10 @@ module tx_intf #
   wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg24; 
   wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg25; // 
   wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg26; 
-  //wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg27; // 
-  //wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg28; // 
-  //wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg29; // 
-  //wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg30; // 
+  wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg27; // FTM TX timestamp upper bits
+  wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg28; // FTM TX timestamp lower bits
+  wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg29; // FTM ACK RX timestamp upper bits
+  wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg30; // FTM ACK RX timestamp lower bits
   //wire [(C_S00_AXI_DATA_WIDTH-1):0] slv_reg31; // MSB 8 bits are used for version read out
   
   wire [(2*IQ_DATA_WIDTH-1) : 0] ant_data;
@@ -391,20 +392,22 @@ module tx_intf #
         .SLV_REG23(slv_reg23),
         .SLV_REG24(slv_reg24),
         .SLV_REG25(slv_reg25),
-        .SLV_REG26(slv_reg26)/*,
+        .SLV_REG26(slv_reg26),
         .SLV_REG27(slv_reg27),
         .SLV_REG28(slv_reg28),
         .SLV_REG29(slv_reg29),
-        .SLV_REG30(slv_reg30),
+        .SLV_REG30(slv_reg30)/*,
         .SLV_REG31(slv_reg31)*/
 	);
 
-    tx_status_fifo tx_status_fifo_i ( // hooked to slv_reg22, slv_reg23, slv_reg24, and slv_reg25
+    tx_status_fifo tx_status_fifo_i ( // hooked to slv_reg22, slv_reg23, slv_reg24, slv_reg25, slv_reg27, slv_reg28, slv_reg29, slv_reg30
         .rstn(s00_axis_aresetn&(~slv_reg0[7])),
         .clk(s00_axis_aclk),
             
         .slv_reg_rden(slv_reg_rden),
         .axi_araddr_core(axi_araddr_core),
+
+        .tx_start_from_acc(tx_start_from_acc),
 
         .tx_try_complete(tx_try_complete),
         .num_slot_random(num_slot_random),
@@ -414,15 +417,24 @@ module tx_intf #
         .pkt_cnt(pkt_cnt),
         .tx_queue_idx(tx_queue_idx),
         .bd_wr_idx(bd_wr_idx),
+        .ftm_time(ftm_time),
         // .s_axis_fifo_data_count0(s_axis_fifo_data_count0),
         // .s_axis_fifo_data_count1(s_axis_fifo_data_count1),
         // .s_axis_fifo_data_count2(s_axis_fifo_data_count2),
         // .s_axis_fifo_data_count3(s_axis_fifo_data_count3),
+        // .s_axis_fifo_data_count0(s_axis_fifo_data_count5),
+        // .s_axis_fifo_data_count1(s_axis_fifo_data_count6),
+        // .s_axis_fifo_data_count2(s_axis_fifo_data_count7),
+        // .s_axis_fifo_data_count3(s_axis_fifo_data_count8),
         
         .tx_status_out1(slv_reg22),
         .tx_status_out2(slv_reg23),
         .tx_status_out3(slv_reg24),
-        .tx_status_out4(slv_reg25)
+        .tx_status_out4(slv_reg25),
+        .tx_status_out5(slv_reg27),
+        .tx_status_out6(slv_reg28),
+        .tx_status_out7(slv_reg29),
+        .tx_status_out8(slv_reg30)
     );
 
 // Instantiation of Axi Bus Interface S00_AXIS
